@@ -15,13 +15,17 @@ function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 800, height: 600})
 
-    // Original
-    /*  mainWindow.loadURL(url.format({
-     pathname: path.join(__dirname, 'index.html'),
-     protocol: 'file:',
-     slashes: true
-     }))*/
-    mainWindow.loadURL('http://localhost:3000')
+    const devUrl = process.env.DEV_URL
+
+    if (devUrl) {
+        mainWindow.loadURL(devUrl)
+    } else {
+        mainWindow.loadURL(url.format({
+            pathname: path.join(__dirname, '../build/index.html'),
+            protocol: 'file:',
+            slashes: true
+        }))
+    }
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
